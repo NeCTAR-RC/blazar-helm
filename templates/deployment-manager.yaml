@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "blazar.fullname" . }}-manager
+  labels:
+    {{- include "blazar.labels" . | nindent 4 }}
+    app.kubernetes.io/component: manager
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.manager.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "blazar.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: manager
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
+        {{- include "blazar.vaultAnnotations" . | nindent 8 }}
+      labels:
+        {{- include "blazar.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: manager
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "blazar.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /var/lib/openstack/bin/blazar-manager
+          volumeMounts:
+            - name: {{ include "blazar.fullname" . }}
+              mountPath: "/etc/blazar/"
+          resources:
+            {{- toYaml .Values.manager.resources | nindent 12 }}
+      volumes:
+        - name: {{ include "blazar.fullname" . }}
+          configMap:
+            name: {{ include "blazar.fullname" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.manager.affinity }}
+      affinity: {{- include "common.tplvalues.render" (dict "value" .Values.manager.affinity "context" $) | nindent 8 }}
+      {{- else }}
+      affinity:
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.manager.podAffinityPreset "component" "manager" "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.manager.podAntiAffinityPreset "component" "manager" "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.manager.nodeAffinityPreset.type "key" .Values.manager.nodeAffinityPreset.key "values" .Values.manager.nodeAffinityPreset.values) | nindent 10 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

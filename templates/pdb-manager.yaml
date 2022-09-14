@@ -1,0 +1,14 @@
+{{- if .Values.manager.pdb.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "blazar.fullname" . }}-manager
+  labels:
+    {{- include "blazar.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.manager.pdb.minAvailable | default 0 }}
+  selector:
+    matchLabels:
+      {{- include "blazar.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: manager
+{{- end }}

@@ -1,0 +1,12 @@
+apiVersion: v2
+name: blazar
+description: A Helm chart for blazar
+type: application
+version: 0.0.1
+appVersion: wallaby-r86d3a8af-l14e1c07-g04366ca
+dependencies:
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 1.x.x
