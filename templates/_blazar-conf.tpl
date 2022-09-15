@@ -2,7 +2,7 @@
 [DEFAULT]
 auth_strategy=keystone
 os_admin_username={{ .Values.conf.keystone.username }}
-os_admin_project_name={{ .Values.conf.keystone.project_name }}
+os_admin_project_name={{ .Values.conf.service_auth.project_name | default .Values.conf.keystone.project_name }}
 os_auth_protocol=https
 os_auth_host={{ .Values.conf.keystone.host }}
 port=8010

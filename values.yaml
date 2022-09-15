@@ -10,6 +10,8 @@ conf:
     username: blazar
     project_name: service
     memcached_servers: []
+  service_auth:
+    project_name:
 
 vault:
   role: k8s
