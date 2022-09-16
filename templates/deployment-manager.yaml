@@ -33,10 +33,10 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.manager.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - /var/lib/openstack/bin/blazar-manager
+            - blazar-manager
           volumeMounts:
             - name: {{ include "blazar.fullname" . }}
               mountPath: "/etc/blazar/"

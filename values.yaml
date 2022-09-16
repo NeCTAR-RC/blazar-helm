@@ -56,7 +56,10 @@ manager:
 oslo_policy:
 
 image:
-  repository: registry.rc.nectar.org.au/loci/blazar
+  api:
+    repository: registry.rc.nectar.org.au/kolla/ubuntu-source-blazar-api
+  manager:
+    repository: registry.rc.nectar.org.au/kolla/ubuntu-source-blazar-manager
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
