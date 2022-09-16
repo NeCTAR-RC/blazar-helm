@@ -53,6 +53,7 @@ manager:
   resources: {}
 
 
+oslo_policy:
 
 image:
   repository: registry.rc.nectar.org.au/loci/blazar

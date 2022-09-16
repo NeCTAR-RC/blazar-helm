@@ -8,3 +8,5 @@ metadata:
 data:
   blazar.conf: |
 {{ include "blazar-conf" . | indent 4 }}
+  policy.yaml: |
+{{ include "nectarlib.oslo_policy" . | indent 4 }}
