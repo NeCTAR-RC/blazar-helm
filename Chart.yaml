@@ -2,7 +2,7 @@ apiVersion: v2
 name: blazar
 description: A Helm chart for blazar
 type: application
-version: 2.0.0
+version: 3.0.0
 appVersion: b4d5240fc48c8-7.0.0-11-gb05ab1a
 dependencies:
 - name: common
