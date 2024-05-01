@@ -2,7 +2,7 @@ apiVersion: v2
 name: blazar
 description: A Helm chart for blazar
 type: application
-version: 3.0.1
+version: 4.0.0
 appVersion: b72caed53771e-12.0.0-8-g30dc118
 dependencies:
 - name: common
@@ -11,5 +11,5 @@ dependencies:
   - bitnami-common
   version: 2.x.x
 - name: nectarlib
-  version: 0.1.0
+  version: 1.x.x
   repository: oci://registry.rc.nectar.org.au/nectar-helm

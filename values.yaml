@@ -18,6 +18,13 @@ vault:
   settings_secret: 'path/to/secret/in/vault'
 
 api:
+  command:
+    - blazar-api
+  port: 8010
+  apache:
+    enabled: false
+  image:
+    repository: registry.rc.nectar.org.au/kolla/ubuntu-source-blazar-api
   replicaCount: 1
   pdb:
     enabled: false
@@ -37,8 +44,12 @@ api:
     #   cpu: 100m
     #   memory: 128Mi
 
-
 manager:
+  name: manager
+  image:
+    repository: registry.rc.nectar.org.au/kolla/ubuntu-source-blazar-manager
+  command:
+    - blazar-manager
   replicaCount: 1
   pdb:
     enabled: false
@@ -52,14 +63,21 @@ manager:
   affinity: {}
   resources: {}
 
+job:
+  db_sync:
+    enabled: true
+    command:
+      - blazar-db-manage
+      - --config-file
+      - /etc/blazar/blazar.conf
+      - --config-file
+      - /etc/blazar/blazar.conf.d/secrets.conf
+      - upgrade
+      - head
 
 oslo_policy:
 
 image:
-  api:
-    repository: registry.rc.nectar.org.au/kolla/ubuntu-source-blazar-api
-  manager:
-    repository: registry.rc.nectar.org.au/kolla/ubuntu-source-blazar-manager
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
