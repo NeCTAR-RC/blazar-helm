@@ -99,20 +99,25 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 42471
+  runAsGroup: 42471
+  fsGroup: 42471
+  seccompProfile:
+    type: RuntimeDefault
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+    add:
+      - NET_BIND_SERVICE
 
 service:
   type: ClusterIP
-  port: 80
 
 ingress:
   enabled: false
