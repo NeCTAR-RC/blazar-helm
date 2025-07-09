@@ -6,6 +6,8 @@
 conf:
   keystone:
     host:
+    protocol: http
+    port: 5000
     auth_url:
     username: blazar
     project_name: service

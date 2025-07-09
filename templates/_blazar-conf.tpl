@@ -3,12 +3,10 @@
 auth_strategy=keystone
 os_admin_username={{ .Values.conf.keystone.username }}
 os_admin_project_name={{ .Values.conf.service_auth.project_name | default .Values.conf.keystone.project_name }}
-os_auth_protocol=https
+os_auth_protocol={{ .Values.conf.keystone.protocol }}
 os_auth_host={{ .Values.conf.keystone.host }}
+os_auth_port={{ .Values.conf.keystone.port }}
 port=8010
-#log_file=/dev/null
-#log_dir=/var/log/blazar
-#use_syslog=True
 
 [manager]
 plugins=physical.host.plugin,virtual.instance.plugin
