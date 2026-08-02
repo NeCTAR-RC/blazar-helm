@@ -22,6 +22,7 @@ connection_recycle_time=600
 driver=messagingv2
 
 [oslo_messaging_rabbit]
+rabbit_transient_queues_ttl=600
 amqp_durable_queues=True
 ssl=True
 rabbit_ha_queues=True
