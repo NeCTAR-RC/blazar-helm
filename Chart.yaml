@@ -2,8 +2,8 @@ apiVersion: v2
 name: blazar
 description: A Helm chart for blazar
 type: application
-version: 4.12.2
-appVersion: 12.0.0-8-g30dc118-10-10
+version: 5.0.0
+appVersion: 17.0.0-7-g48d5dca7-6-10
 sources:
   - https://github.com/NeCTAR-RC/blazar-helm.git
 dependencies:

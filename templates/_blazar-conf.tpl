@@ -22,9 +22,11 @@ connection_recycle_time=600
 driver=messagingv2
 
 [oslo_messaging_rabbit]
-amqp_durable_queues=True
 ssl=True
-rabbit_ha_queues=True
+rabbit_quorum_queue=true
+rabbit_transient_quorum_queue=true
+rabbit_stream_fanout=true
+rabbit_qos_prefetch_count=1
 
 [oslo_policy]
 policy_file=/etc/blazar/policy.yaml
